@@ -26,12 +26,12 @@ export class ThemeToggleComponent {
   protected readonly effectiveTheme = this.themeService.effectiveTheme;
 
   private readonly iconMap = {
-    light: { icon: SunMedium, hover: 'rotate-12' },
-    dark: { icon: Moon, hover: '-rotate-12' },
-    system: { icon: Monitor, hover: 'scale-110' },
+    light: { icon: SunMedium, hoverClass: 'group-hover:rotate-12' },
+    dark: { icon: Moon, hoverClass: 'group-hover:-rotate-12' },
+    system: { icon: Monitor, hoverClass: 'group-hover:scale-110' },
   } as const satisfies Record<
     UserTheme,
-    { icon: LucideIconData; hover: string }
+    { icon: LucideIconData; hoverClass: string }
   >;
 
   private readonly themeCycle = {
@@ -43,6 +43,12 @@ export class ThemeToggleComponent {
   protected readonly currentIcon = computed(() => {
     const theme = this.currentTheme();
     return this.iconMap[theme];
+  });
+
+  protected readonly iconClasses = computed(() => {
+    const baseClasses = 'h-5 w-5 transition-transform duration-200';
+    const hoverClass = this.currentIcon().hoverClass;
+    return `${baseClasses} ${hoverClass}`;
   });
 
   protected toggleTheme(): void {
