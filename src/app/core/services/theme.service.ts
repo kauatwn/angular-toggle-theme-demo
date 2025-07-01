@@ -2,8 +2,8 @@ import { DOCUMENT } from '@angular/common';
 import { computed, effect, inject, Injectable, signal } from '@angular/core';
 
 const THEMES = ['light', 'dark', 'system'] as const;
-export type Theme = (typeof THEMES)[number];
-type SystemTheme = Exclude<Theme, 'system'>;
+export type UserTheme = (typeof THEMES)[number];
+type SystemTheme = Exclude<UserTheme, 'system'>;
 
 @Injectable({
   providedIn: 'root',
@@ -12,7 +12,7 @@ export class ThemeService {
   private static readonly THEME_STORAGE_KEY = 'theme' as const;
 
   private readonly document = inject(DOCUMENT);
-  private readonly userTheme = signal<Theme>(this.getInitialTheme());
+  private readonly userTheme = signal<UserTheme>(this.getInitialTheme());
   private readonly systemTheme = signal<SystemTheme>('light');
 
   readonly effectiveTheme = computed(() => {
@@ -28,7 +28,7 @@ export class ThemeService {
     this.initThemeEffect();
   }
 
-  setTheme(theme: Theme): void {
+  setTheme(theme: UserTheme): void {
     this.userTheme.set(theme);
     this.saveThemeToStorage(theme);
   }
@@ -42,22 +42,22 @@ export class ThemeService {
     }
   }
 
-  private getInitialTheme(): Theme {
+  private getInitialTheme(): UserTheme {
     if (typeof window === 'undefined') return 'system';
 
     const saved = localStorage.getItem(ThemeService.THEME_STORAGE_KEY);
     if (saved && this.isValidTheme(saved)) {
-      return saved as Theme;
+      return saved as UserTheme;
     }
 
     return 'system';
   }
 
-  private isValidTheme(theme: string): theme is Theme {
-    return THEMES.includes(theme as Theme);
+  private isValidTheme(theme: string): theme is UserTheme {
+    return THEMES.includes(theme as UserTheme);
   }
 
-  private saveThemeToStorage(theme: Theme): void {
+  private saveThemeToStorage(theme: UserTheme): void {
     if (typeof window !== 'undefined') {
       localStorage.setItem(ThemeService.THEME_STORAGE_KEY, theme);
     }
