@@ -1,0 +1,20 @@
+<button
+  (click)="toggleTheme()"
+  class="group relative cursor-pointer rounded-md border border-neutral-300 bg-white p-2 text-neutral-700 transition-colors hover:bg-neutral-100 dark:border-neutral-700 dark:bg-neutral-800 dark:text-neutral-100 dark:hover:bg-neutral-700"
+>
+  <lucide-icon
+    [img]="currentIcon().icon"
+    class="h-5 w-5 transition-transform duration-200"
+    [class.group-hover:rotate-12]="currentTheme() === 'light'"
+    [class.group-hover:-rotate-12]="currentTheme() === 'dark'"
+    [class.group-hover:scale-110]="currentTheme() === 'system'"
+  ></lucide-icon>
+
+  @if (currentTheme() === "system") {
+    <div
+      class="absolute -right-1 -bottom-1 h-3 w-3 rounded-full border-2 border-white transition-colors duration-200 dark:border-neutral-800"
+      [class.bg-amber-400]="effectiveTheme() === 'light'"
+      [class.bg-blue-600]="effectiveTheme() === 'dark'"
+    ></div>
+  }
+</button>
