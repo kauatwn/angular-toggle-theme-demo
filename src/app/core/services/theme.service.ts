@@ -1,9 +1,6 @@
 import { DOCUMENT } from '@angular/common';
 import { computed, effect, inject, Injectable, signal } from '@angular/core';
-
-const THEMES = ['light', 'dark', 'system'] as const;
-export type UserTheme = (typeof THEMES)[number];
-type SystemTheme = Exclude<UserTheme, 'system'>;
+import { SystemTheme, THEMES, UserTheme } from '../models';
 
 @Injectable({
   providedIn: 'root',
