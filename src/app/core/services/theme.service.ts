@@ -20,17 +20,40 @@ export class ThemeService {
   readonly isDarkMode = computed(() => this.effectiveTheme() === 'dark');
   readonly theme = this.userTheme.asReadonly();
 
-  constructor() {
-    this.initSystemThemeDetection();
-    this.initThemeEffect();
-  }
+  private readonly setupSystemThemeDetection = effect((onCleanup) => {
+    this.systemTheme();
 
-  setTheme(theme: UserTheme): void {
+    if (typeof window === 'undefined') return;
+
+    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+    this.systemTheme.set(mediaQuery.matches ? 'dark' : 'light');
+
+    const handleChange = (event: MediaQueryListEvent) => {
+      this.systemTheme.set(event.matches ? 'dark' : 'light');
+    };
+
+    mediaQuery.addEventListener('change', handleChange);
+
+    onCleanup(() => {
+      if (mediaQuery) {
+        mediaQuery.removeEventListener('change', handleChange);
+      }
+    });
+  });
+
+  private readonly setupThemeEffect = effect(() => {
+    const isDark = this.isDarkMode();
+    const htmlElement = this.document.documentElement;
+
+    htmlElement.classList.toggle('dark', isDark);
+  });
+
+  setTheme(theme: UserTheme) {
     this.userTheme.set(theme);
     this.saveThemeToStorage(theme);
   }
 
-  toggleTheme(): void {
+  toggleTheme() {
     const current = this.userTheme();
     if (current === 'system') {
       this.setTheme(this.systemTheme() === 'dark' ? 'light' : 'dark');
@@ -50,7 +73,7 @@ export class ThemeService {
     return 'system';
   }
 
-  private isValidTheme(theme: string): theme is UserTheme {
+  private isValidTheme(theme: string): boolean {
     return THEMES.includes(theme as UserTheme);
   }
 
@@ -58,25 +81,5 @@ export class ThemeService {
     if (typeof window !== 'undefined') {
       localStorage.setItem(ThemeService.THEME_STORAGE_KEY, theme);
     }
-  }
-
-  private initSystemThemeDetection(): void {
-    if (typeof window === 'undefined') return;
-
-    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-    this.systemTheme.set(mediaQuery.matches ? 'dark' : 'light');
-
-    mediaQuery.addEventListener('change', (event) => {
-      this.systemTheme.set(event.matches ? 'dark' : 'light');
-    });
-  }
-
-  private initThemeEffect(): void {
-    effect(() => {
-      const isDark = this.isDarkMode();
-      const htmlElement = this.document.documentElement;
-
-      htmlElement.classList.toggle('dark', isDark);
-    });
   }
 }
