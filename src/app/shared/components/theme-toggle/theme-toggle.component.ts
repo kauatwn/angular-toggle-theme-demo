@@ -11,7 +11,8 @@ import {
   Moon,
   SunMedium,
 } from 'lucide-angular';
-import { ThemeService, UserTheme } from '../../../core/services/theme.service';
+import { UserTheme } from '../../../core/models';
+import { ThemeService } from '../../../core/services/theme.service';
 
 @Component({
   selector: 'app-theme-toggle',
@@ -53,9 +54,5 @@ export class ThemeToggleComponent {
 
   protected toggleTheme(): void {
     this.themeService.setTheme(this.themeCycle[this.currentTheme()]);
-  }
-
-  protected setTheme(theme: UserTheme): void {
-    this.themeService.setTheme(theme);
   }
 }
