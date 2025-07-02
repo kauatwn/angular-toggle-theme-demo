@@ -1,9 +1,26 @@
 /* You can add global styles to this file, and also import other style files */
 
+@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
+
 @import "tailwindcss";
 
 @custom-variant dark (&:where(.dark, .dark *));
 
+@keyframes blink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
 body {
   @apply flex min-h-screen items-center justify-center bg-neutral-100 px-4 transition-colors duration-300 dark:bg-neutral-900;
+  font-family: "Inter", sans-serif;
+}
+
+app-root {
+  @apply w-full max-w-md;
 }
