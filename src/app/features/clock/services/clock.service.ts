@@ -33,6 +33,7 @@ export class ClockService {
       minutes: String(minutes).padStart(2, '0'),
       seconds: String(seconds).padStart(2, '0'),
       dayPeriod: hours >= 12 ? 'PM' : 'AM',
+      isoString: date.toISOString(),
     } as const satisfies ClockTime;
   });
 
@@ -60,6 +61,7 @@ export class ClockService {
       month,
       year,
       fullDate,
+      isoString: currentDate.toISOString().split('T')[0],
     } as const satisfies ClockDate;
   });
 }
