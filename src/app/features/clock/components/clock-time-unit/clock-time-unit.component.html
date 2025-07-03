@@ -1,31 +1,35 @@
-<div class="my-2 flex items-end justify-center gap-1 leading-none">
-  <div
-    id="hours"
+<time
+  [attr.datetime]="time().isoString"
+  class="my-2 flex items-end justify-center gap-1 leading-none"
+>
+  <span
     class="text-5xl font-semibold text-neutral-900 tabular-nums dark:text-neutral-100"
+    aria-label="Horas"
   >
     {{ time().hours }}
-  </div>
-  <div
+  </span>
+  <span
     class="animate-[blink_1s_step-end_infinite] text-5xl font-semibold text-neutral-900 tabular-nums dark:text-neutral-100"
+    aria-hidden="true"
   >
     :
-  </div>
-  <div
-    id="minutes"
+  </span>
+  <span
     class="text-5xl font-semibold text-neutral-900 tabular-nums dark:text-neutral-100"
+    aria-label="Minutos"
   >
     {{ time().minutes }}
-  </div>
-  <div
-    id="seconds"
+  </span>
+  <span
     class="ml-2 min-w-[2ch] text-3xl font-semibold text-neutral-500 tabular-nums dark:text-neutral-400"
+    aria-label="Segundos"
   >
     {{ time().seconds }}
-  </div>
-</div>
+  </span>
+</time>
 <div
-  id="day-period"
   class="text-base font-medium text-neutral-600 dark:text-neutral-400"
+  aria-label="Período do dia"
 >
   {{ time().dayPeriod }}
 </div>
