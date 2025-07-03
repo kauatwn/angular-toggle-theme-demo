@@ -52,6 +52,11 @@ export class ThemeToggleComponent {
     return `${baseClasses} ${hoverClass}`;
   });
 
+  protected readonly ariaLabel = computed(() => {
+    const theme = this.currentTheme();
+    return `Alternar tema. Tema atual: ${theme}`;
+  });
+
   protected toggleTheme(): void {
     this.themeService.setTheme(this.themeCycle[this.currentTheme()]);
   }
