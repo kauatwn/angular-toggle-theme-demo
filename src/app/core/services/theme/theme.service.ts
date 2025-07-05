@@ -1,6 +1,6 @@
 import { DOCUMENT } from '@angular/common';
 import { computed, effect, inject, Injectable, signal } from '@angular/core';
-import { SystemTheme, THEMES, UserTheme } from '../models';
+import { SystemTheme, THEMES, UserTheme } from '../../models';
 
 @Injectable({
   providedIn: 'root',
@@ -11,6 +11,11 @@ export class ThemeService {
   private readonly document = inject(DOCUMENT);
   private readonly userTheme = signal<UserTheme>(this.getInitialTheme());
   private readonly systemTheme = signal<SystemTheme>('light');
+  private readonly themeCycle = {
+    light: 'dark',
+    dark: 'system',
+    system: 'light',
+  } as const satisfies Record<UserTheme, UserTheme>;
 
   readonly effectiveTheme = computed(() => {
     const theme = this.userTheme();
@@ -53,13 +58,9 @@ export class ThemeService {
     this.saveThemeToStorage(theme);
   }
 
-  toggleTheme() {
+  cycleTheme() {
     const current = this.userTheme();
-    if (current === 'system') {
-      this.setTheme(this.systemTheme() === 'dark' ? 'light' : 'dark');
-    } else {
-      this.setTheme(current === 'dark' ? 'light' : 'dark');
-    }
+    this.setTheme(this.themeCycle[current]);
   }
 
   private getInitialTheme(): UserTheme {
