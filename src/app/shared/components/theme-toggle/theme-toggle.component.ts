@@ -12,7 +12,7 @@ import {
   SunMedium,
 } from 'lucide-angular';
 import { UserTheme } from '../../../core/models';
-import { ThemeService } from '../../../core/services/theme.service';
+import { ThemeService } from '../../../core/services/theme/theme.service';
 
 @Component({
   selector: 'app-theme-toggle',
@@ -35,12 +35,6 @@ export class ThemeToggleComponent {
     { icon: LucideIconData; hoverClass: string }
   >;
 
-  private readonly themeCycle = {
-    light: 'dark',
-    dark: 'system',
-    system: 'light',
-  } as const satisfies Record<UserTheme, UserTheme>;
-
   protected readonly currentIcon = computed(() => {
     const theme = this.currentTheme();
     return this.iconMap[theme];
@@ -58,6 +52,6 @@ export class ThemeToggleComponent {
   });
 
   protected toggleTheme(): void {
-    this.themeService.setTheme(this.themeCycle[this.currentTheme()]);
+    this.themeService.cycleTheme();
   }
 }
