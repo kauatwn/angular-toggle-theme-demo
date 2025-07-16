@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "angular-digital-clock-demo": {
+    "angular-toggle-theme-demo": {
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -13,7 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/angular-digital-clock-demo",
+            "outputPath": "dist/angular-toggle-theme-demo",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": [
@@ -59,10 +59,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "angular-digital-clock-demo:build:production"
+              "buildTarget": "angular-toggle-theme-demo:build:production"
             },
             "development": {
-              "buildTarget": "angular-digital-clock-demo:build:development"
+              "buildTarget": "angular-toggle-theme-demo:build:development"
             }
           },
           "defaultConfiguration": "development"
