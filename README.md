@@ -1,4 +1,4 @@
-# Angular Digital Clock Demo
+# Angular Toggle Theme Demo
 
 Este projeto é uma aplicação de relógio digital desenvolvida para praticar e demonstrar recursos modernos do Angular 19+, como signals para gerenciamento reativo de estado, control flow nativo (`@if`, `@for`), standalone components e outras boas práticas recomendadas pela equipe Angular. A aplicação também implementa modo noturno e utiliza Tailwind CSS para estilização.
 
@@ -26,13 +26,13 @@ Siga os passos abaixo para executar o projeto:
 1. Clone este repositório em sua máquina local:
 
    ```bash
-   git clone https://github.com/kauatwn/angular-digital-clock-demo.git
+   git clone https://github.com/kauatwn/angular-toggle-theme-demo.git
    ```
 
 2. Acesse a pasta do projeto:
 
    ```bash
-   cd angular-digital-clock-demo
+   cd angular-toggle-theme-demo
    ```
 
 3. Instale as dependências:
@@ -62,7 +62,7 @@ Abaixo alguns exemplos da interface da aplicação:
 O projeto está organizado da seguinte forma:
 
 ```plaintext
-angular-digital-clock-demo/
+angular-toggle-theme-demo/
 └── src/
     ├── app/
     │   ├── core/
